@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+}
+
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = '11'
+    modules = ['javafx.controls','javafx.fxml']
+}
+
+mainClassName = 'cz.nevimjak.client.Main'
+
+
+jar {
+
+    duplicatesStrategy = 'include'
+    manifest {
+        attributes (
+                'Main-Class': mainClassName
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it)}
+    }
+}
